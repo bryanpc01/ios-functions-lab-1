@@ -337,6 +337,18 @@ mostFrequentNum(in: [1, 2, 3, 2, 3, 5, 1, 3, 4])
 
 Write a function that sums all the even indices of an array of Ints.
 
+```swift
+func sumOfArrayIndices(arr: [Int]) -> Int {
+    var sum = 0
+    for index in arr.indices where index % 2 == 0{
+        sum += index
+    }
+    return sum
+}
+
+print(sumOfArrayIndices(arr: [1,2,3]))
+```
+
 
 ## Question 15
 
@@ -346,6 +358,22 @@ Example:
 Input: `[1: "hi", 5: "bye:]`
 
 Output: `["hi": 1, "bye": 5]`
+
+```swift
+func dictionaryFlip(dict: [Int : String]) -> [String : Int]{
+    let keysArr = Array(dict.keys)
+    let valuesArr = Array(dict.values)
+    var outputDict = [String : Int]()
+    for index in 0...keysArr.count - 1 {
+        let newKey = valuesArr[index]
+        let newValue = keysArr[index]
+        outputDict[newKey] = newValue
+    }
+    return outputDict
+}
+
+print(dictionaryFlip(dict: [1: "hi", 5: "bye"]))
+```
 
 
 ## Question 16
@@ -357,9 +385,45 @@ Input: `["Person 1": 83, "Person 2": 74, "Person 3": 82]`
 
 Output: `"Person 3"`
 
+```swift
+func secondHighestScore(dict: [String : Int]) -> String {
+    var personWithSecondHighestScore = ""
+    var personWithHighestScore = ""
+    var highestScore = 0
+    var secondHighestScore = 0
+
+    for (key,value) in dict where value >= secondHighestScore {
+        if value > highestScore {
+            secondHighestScore = highestScore
+            personWithSecondHighestScore = personWithHighestScore
+            highestScore = value
+            personWithHighestScore = key
+        } else {
+            secondHighestScore = value
+            personWithSecondHighestScore = key
+        }
+    }
+
+    return personWithSecondHighestScore
+}
+
+print(secondHighestScore(dict: ["Person 1": 83, "Person 2": 74, "Person 3": 82]))
+```
+
 ## Question 17
 
 Write a function that determines if a value is inside of array.
+
+```swift
+func isInArray(value: Int, in arr: [Int]) -> Bool {
+    for number in arr where number == value {
+        return true
+    }
+    return false
+}
+
+print(isInArray(value: 11, in: [1,2,3,4,5,6,7,8,9,10]))
+```
 
 
 ## Question 18
@@ -369,6 +433,13 @@ Using your new function, write code that prints out whether `dieRoll` is even or
 
 `let dieRoll = Int(arc4random_uniform(6) + 1)`
 
+```swift
+func evenOrOdd(x: Int) -> Bool {
+    return x % 2 == 0
+}
+let dieRoll = Int(arc4random_uniform(6) + 1)
+print(dieRoll,evenOrOdd(x: dieRoll))
+```
 
 ## Question 19
 
@@ -380,6 +451,29 @@ Using your function from the first step, use String interpolation to print a sen
 
 If you haven't already done so, write a function that takes in an Int and returns whether that number is even or odd. Use that function to print a sentence that states whether the largest Int in `myArray` is even or odd.
 
+```swift
+func largestIntInArray(arr: [Int]) -> Int {
+    var largestInt = Int.min
+
+    for value in arr where value > largestInt {
+        largestInt = value
+    }
+    return largestInt
+}
+
+// Using your function from the first step, use String interpolation to print a sentence that states what the largest Int in `myArray` is
+let myArray = [3,5,1,3,532,1,4,91,20,30,92,143, 533]
+let largestInteger = largestIntInArray(arr: myArray)
+
+print("The largest integer in myArray is: \(largestInteger)")
+
+// If you haven't already done so, write a function that takes in an Int and returns whether that number is even or odd. Use that function to print a sentence that states whether the largest Int in `myArray` is even or odd.
+func evenOrOdd(x: Int) -> Bool {
+    return x % 2 == 0
+}
+
+print("\(largestInteger), the largest integer in myArray is \(evenOrOdd(x: largestInteger) ? "even." : "odd.")")
+```
 
 ## Question 20
 
@@ -389,6 +483,15 @@ Using your function, print how many characters are in myString:
 
 `let myString = "Swift is a new programming language for iOS, OS X, watchOS, and tvOS apps that builds on the best of C and Objective-C, without the constraints of C compatibility."`
 
+```swift
+func numberOfCharactersInAString(input: String) -> Int {
+    return input.count
+}
+
+let myString = "Swift is a new programming language for iOS, OS X, watchOS, and tvOS apps that builds on the best of C and Objective-C, without the constraints of C compatibility."
+
+print("The number of characters in myString is:",numberOfCharactersInAString(input: myString))
+```
 
 ## Question 21
 
@@ -402,6 +505,21 @@ let targetCharacter: Character = "i"
 ```
 
 Sample output: `3`
+
+```swift
+let testString = "This is a test string for your code"
+let targetCharacter: Character = "i"
+
+func countNumberOf(char: Character, in string: String) -> Int {
+    var counter = 0
+    for character in string where char == character {
+        counter += 1
+    }
+    return counter
+}
+
+print(countNumberOf(char: targetCharacter, in: testString))
+```
 
 
 ## Question 22
@@ -417,6 +535,20 @@ let targetCharacters: [Character] = ["a","e","i","o","u"]
 
 Output: `13`
 
+```swift
+let inputString = "This one is a little more complicated"
+let targetCharacters: [Character] = ["a","e","i","o","u"]
+
+func countNumberOfTargetChars(target: [Character], string: String) -> Int {
+    var counter = 0
+    for character in string where targetCharacters.contains(character) {
+        counter += 1
+    }
+    return counter
+}
+print(countNumberOfTargetChars(target: targetCharacters, string: inputString))
+```
+
 
 ## Question 23
 
@@ -429,6 +561,25 @@ Output: `4`
 
 //Explanation: 2, 4, 6, 9 are unique in the array. Every other number is not unique.
 
+```swift
+let inputArray2 = [3,1,4,1,3,2,6,1,9,9,11,12]
+
+func uniqueIntegers(arr: [Int]) -> Int {
+    var setOfReusedValues = Set<Int>()
+    var testSet = Set<Int>()
+
+    for value in arr {
+        let testTuple = testSet.insert(value)
+        if testTuple.inserted == false {
+            setOfReusedValues.insert(testTuple.memberAfterInsert)
+        }
+    }
+
+    return testSet.subtracting(setOfReusedValues).count
+}
+
+print(uniqueIntegers(arr: inputArray2))
+```
 
 ## Question 24
 
@@ -439,6 +590,20 @@ Input: `let binaryArray = [1,0,1,1,1,0,1]`
 
 Output: `93`
 
+```swift
+let binaryArray = [1,0,1,1,1,0,1]
+
+func binaryArrayToInt(arr: [Int]) -> Int {
+    var decimalValue = 0
+    for (index,value) in arr.reversed().enumerated() {
+        decimalValue += Int(pow(2.0, Double(index))) * value
+    }
+    return decimalValue
+}
+
+print(binaryArrayToInt(arr: binaryArray))
+```
+
 ## Question 25
 
 Write a function named `timeDifference`. It takes as input four numbers that represent two times in a day and returns the difference in minutes between them. The first two parameters `firstHour` and `firstMinute` represent the hour and minute of the first time. The last two `secondHour` and `secondMinute` represent the hour and minute of the second time. All parameters should have external parameter names with the same name as the local ones.
@@ -447,6 +612,16 @@ Example:
 Input: `timeDifference(firstHour: 12, firstMinute: 3, secondHour: 13, secondMinute: 10)`
 
 Output: `67`
+
+```swift
+func timeDifference(firstHour: Int, firstMinute: Int, secondHour: Int, secondMinute: Int) -> Int {
+    let firstTime = firstHour * 60 + firstMinute
+    let secondTime = secondHour * 60 + secondMinute
+
+    return abs(firstTime - secondTime)
+}
+print(timeDifference(firstHour: 12, firstMinute: 3, secondHour: 13, secondMinute: 10))
+```
 
 
 ## Question 26
@@ -457,6 +632,17 @@ Example:
 Input:  `filterOdd(arr: [1, 2, 3, 4, 5, 6, 7, 8])`
 
 Output: `[2, 4, 6, 8]`
+
+```swift
+func filterOdd(arr: [Int]) -> [Int] {
+    var outputArr = [Int]()
+    for value in arr where value % 2 == 0 {
+        outputArr.append(value)
+    }
+    return outputArr
+}
+print(filterOdd(arr: [1, 2, 3, 4, 5, 6, 7, 8]))
+```
 
 
 ## Question 27
@@ -476,6 +662,26 @@ Input:  `multiplyIt(arr: [1, 2, 3, 4], n: 4)`
 
 Output:  `[4, 8, 12, 16]`
 
+```swift
+func doubleIt(arr: [Int]) -> [Int] {
+    var outputArr = [Int]()
+    for value in arr {
+        outputArr.append(value * 2)
+    }
+    return outputArr
+}
+print(doubleIt(arr: [1, 2, 3, 4]))
+
+func multiplyIt(arr: [Int], n: Int) -> [Int] {
+    var outputArr = [Int]()
+    for value in arr {
+        outputArr.append(value * n)
+    }
+    return outputArr
+}
+print(multiplyIt(arr: [1, 2, 3, 4], n: 4))
+```
+
 
 ## Question 28
 
@@ -485,6 +691,19 @@ Example:
 Input:  `unwrap(arr: [nil, 7, 4, nil, 43, 11, nil, 2])`
 
 Output: `[7, 4, 43, 11, 2]`
+
+```swift
+func unwrap(arr: [Int?]) -> [Int] {
+    var outputArr = [Int]()
+    for value in arr {
+        if let number = value {
+            outputArr.append(number)
+        }
+    }
+    return outputArr
+}
+print(unwrap(arr: [nil, 7, 4, nil, 43, 11, nil, 2]))
+```
 
 
 ## Question 29
@@ -496,6 +715,18 @@ Input:  `countBools(arr: [true, true, false, true, false, true])`
 
 Output: `[false: 2, true: 4]`
 
+```swift
+func countBools(arr: [Bool]) -> [Bool: Int] {
+    var outputDict = [true: 0, false: 0]
+    for value in arr {
+        if let currentNumber = outputDict[value] {
+            outputDict[value] = currentNumber + 1
+        }
+    }
+    return outputDict
+}
+print(countBools(arr: [true, true, false, true, false, true]))
+```
 
 ## Question 30
 
@@ -506,6 +737,20 @@ Input:  `countCharacters(str: "Hello, World!")`
 
 Output: `["H": 1, "r": 1, "!": 1, "e": 1, "o": 2, "l": 3, ",": 1, " ": 1, "W": 1, "d": 1]`
 
+```swift
+func countCharacters(str: String) -> [String : Int] {
+    var outputDict = [String : Int]()
+    for char in str {
+        if let currentCount = outputDict[String(char)] {
+            outputDict[String(char)] = currentCount + 1
+        } else {
+            outputDict[String(char)] = 1
+        }
+    }
+    return outputDict
+}
+print(countCharacters(str: "Hello, World!"))
+```
 
 ## Question 31
 
@@ -518,31 +763,121 @@ Input:  `dictToTuples(dict: baseballTeamsById)`
 
 Output: `[(.0 1003, .1 "Rays"), (.0 1001, .1 "Mets"), (.0 1004, .1 "Marlins"), (.0 1002, .1 "Yankees")]`
 
+```swift
+func dictToTuples(dict: [Int: String]) -> [(id: Int, team: String)] {
+    var outputArry = [(Int, String)]()
+    for (key, value) in dict {
+        outputArry.append((key, value))
+    }
+    return outputArry
+}
+
+let baseballTeamsById = [1001:"Mets", 1002:"Yankees", 1003:"Rays", 1004:"Marlins"]
+print(dictToTuples(dict: baseballTeamsById))
+```
+
 
 ## Question 32
 
 Write a function that checks if a String is a [Palindrome](https://en.wikipedia.org/wiki/Palindrome)
+
+```swift
+func isPalindrome(str: String){
+    let isPalindrome = str == String(str.reversed())
+
+    isPalindrome ? print("Your input string is a palindrome.") : print("Your input string is not a palindrome.")
+}
+isPalindrome(str: "aabaa")
+```
 
 
 ## Question 33
 
 Write a function that checks if a String is a [pangram](https://en.wikipedia.org/wiki/Pangram)
 
+```swift
+func isPangram(str: String) {
+    let alphabet: Set<String> = ["a","b","c","d","e","f","g", "h","i","j", "k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+    var testSet = Set<String>()
+
+    for character in str.lowercased() where ![" ","\n",",","-", "'", "\"", "\'", "?", "!"].contains(character){
+        testSet.insert(String(character))
+    }
+    alphabet == testSet ? print("The input string is a pangram.") : print("The input string is not a pangram.")
+}
+isPangram(str: "abcdefghijknlmnoprstuvwxyz")
+```
+
 
 ## Question 34
 
 Write your own `min()` and `max()` functions for an Array of Ints
+
+```swift
+let inputArray = [1,2,3,4,5,6,7,8,9,10]
+
+func myMax(arr: [Int]) -> Int {
+    var highestInt = Int.min
+    for value in arr where value > highestInt {
+        highestInt = value
+    }
+    return highestInt
+}
+print("Max:",myMax(arr: inputArray))
+
+func myMin(arr: [Int]) -> Int {
+    var lowestInt = Int.max
+    for value in arr where value < lowestInt {
+        lowestInt = value
+    }
+    return lowestInt
+}
+print("Min:",myMin(arr: inputArray))
+```
 
 
 ## Question 35
 
 Given two arrays of Ints, write a function that tells you all the values they have in common.
 
+```swift
+let input1 = [1,2,3]
+let input2 = [2,3,4]
+func commonValuesInArry(arr1: [Int], arr2: [Int]) -> [Int] {
+    var commonValues = [Int]()
+    for value in arr1 where arr2.contains(value) {
+        commonValues.append(value)
+    }
+    return commonValues
+}
+print(commonValuesInArry(arr1: input1, arr2: input2))
+```
+
 
 ## Question 36
 
 Find the most-frequently appearing Array of Ints in an Array of Arrays of Ints.
 
+```swift
+func mostFrequentArrayOfInts (in arr: [[Int]]) -> [Int] {
+    var outputArry = [Int]()
+    var frequencyDict = [[Int]: Int]()
+    for array in arr {
+        if let count = frequencyDict[array] {
+            frequencyDict[array] = count + 1
+        } else {
+            frequencyDict[array] = 1
+        }
+    }
+    var highestCount = 0
+    for (key,value) in frequencyDict where value > highestCount {
+        highestCount = value
+        outputArry = key
+    }
+    return outputArry
+}
+print(mostFrequentArrayOfInts(in: [[1,2],[1,2],[1,2,3],[1,2,3,4,5],[1,2,3],[1,2,3],[1,2,3]]))
+```
 
 ## Question 37
 
@@ -553,3 +888,35 @@ Sample input:
 
 Sample output:
 `Uijt jt b uftu tusjoh. Bozuijoh dbo cf xsjuufo jo ifsf (fwfo Afcsbt boe afcsbt).`
+
+
+```swift
+func rot_1(str: String) -> String {
+    var outputString = ""
+    let rot_1Dic = ["a" : "b","b" : "c","c" : "d","d" : "e",
+                    "e" : "f","f" : "g","g" : "h","h" : "i",
+                    "i" : "j","j" : "k","k" : "l","l" : "m",
+                    "m" : "n","n" : "o","o" : "p","p" : "q",
+                    "q" : "r","r" : "s","s" : "t","t" : "u",
+                    "u" : "v","v" : "w","w" : "x","x" : "y",
+                    "y" : "z","z" : "a",
+                    "A" : "B","B" : "C","C" : "D","D" : "E",
+                    "E" : "F","F" : "G","G" : "H","H" : "I",
+                    "I" : "J","J" : "K","K" : "L","L" : "M",
+                    "M" : "N","N" : "O","O" : "P","P" : "Q",
+                    "Q" : "R","R" : "S","S" : "T","T" : "U",
+                    "U" : "V","V" : "W","W" : "X","X" : "Y",
+                    "Y" : "Z","Z" : "A"]
+    for character in str {
+        if let newChar = rot_1Dic[String(character)] {
+            outputString += newChar
+        } else {
+            outputString += String(character)
+        }
+    }
+    return outputString
+}
+let input = "This is a test string. Anything can be written in here (even Zebras and zebras)."
+print("Input: \(input)")
+print("Output: \(rot_1(str: input))")
+```
