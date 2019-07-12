@@ -21,11 +21,11 @@ totalWithTax()
 Then, modify the function you implemented to have a return type of `Int`, and use an external name that looks more readable. Function calls should look something like "total cost of the item after tax"
 
 ```swift
-func totalCostAfterTax (itemCost:Double, tax: Double) -> Double {
+func totalCostAfterTax (of itemCost:Double, after tax: Double) -> Double {
     return itemCost * (1 + tax)
 }
 
-print(totalCostAfterTax(itemCost: itemCost, tax: nyTax))
+print(totalCostAfterTax(of: itemCost, after: nyTax))
 ```
 ## Question 2
 
@@ -47,9 +47,9 @@ if todaysTemperature <= 40 {
 let todaysTemperature = 72
 
 func howIsTheTemperature(temp: Int) -> String {
-    if todaysTemperature <= 40 {
+    if temp <= 40 {
         return "It's cold out."
-    } else if todaysTemperature >= 85 {
+    } else if temp >= 85 {
         return "It's really warm."
     } else {
         return "Weather is moderate."
